@@ -1,7 +1,7 @@
 {
   "name": "matrix_game",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,12 @@
   },
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-inlinesvg": "^4.2.0",
+    "styled-components": "^6.1.17"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

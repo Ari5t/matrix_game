@@ -1,10 +1,60 @@
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import SVG from 'react-inlinesvg'
 
-const ROWS = 6
-const COLS = 6
+import crystalSrc from './assets/crystal.svg'
+
+const ROWS = 7
+const COLS = 7
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+`
+const CrystalIcon = styled(SVG)<{ $color: string }>`
+  width: 64px;
+  height: 64px;
+  z-index: 2;
+
+  & path {
+    fill: ${({ $color }) => $color};
+  }
+`
+
+const Block = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(${COLS}, 1fr);
+  grid-template-rows: repeat(${ROWS}, 1fr);
+`
+
+const BackgroundBlock = styled(Block)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+`
+
+const BackgroundElement = styled.div<{ $backgroundColor?: number }>`
+  width: 64px;
+  height: 64px;
+  background-color: ${({ $backgroundColor }) =>
+    $backgroundColor ? '#383838' : '#333333'};
+`
+
+function randomIntFromInterval(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+const colors = ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff']
 
 function App() {
-  const [matrix, setMatrix] = useState<number[][]>([[]])
+  const [matrix, setMatrix] = useState<string[][]>([[]])
 
   useEffect(
     function () {
@@ -14,13 +64,14 @@ function App() {
       const timer = setInterval(() => {
         setMatrix((prevMatrix) => {
           const newMatrix = [...prevMatrix]
+          const newCrystal = colors[randomIntFromInterval(0, colors.length - 1)]
           if (newMatrix[newMatrix.length - 1].length !== COLS) {
             newMatrix[newMatrix.length - 1] = [
               ...newMatrix[newMatrix.length - 1],
-              Math.random() > 0.5 ? 1 : 0,
+              newCrystal,
             ]
           } else {
-            newMatrix[newMatrix.length] = [Math.random() > 0.5 ? 1 : 0]
+            newMatrix[newMatrix.length] = [newCrystal]
           }
 
           return newMatrix
@@ -37,23 +88,31 @@ function App() {
   console.log('Matrix updated: ', matrix)
 
   return (
-    <div>
-      {matrix.map((row, rowIndex) => (
-        <div key={rowIndex} style={{ display: 'flex' }}>
-          {row.map((cell, cellIndex) => (
-            <div
-              key={cellIndex}
-              style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: cell ? 'black' : 'white',
-                border: '1px solid gray',
-              }}
+    <Wrapper>
+      <Block>
+        {matrix.map((row, rowIndex) =>
+          row.map((cell, cellIndex) => (
+            <CrystalIcon
+              key={`${rowIndex}_${cellIndex}`}
+              src={crystalSrc}
+              $color={cell}
             />
-          ))}
-        </div>
-      ))}
-    </div>
+          ))
+        )}
+        <BackgroundBlock>
+          {Array.from({ length: ROWS }, () =>
+            Array.from({ length: COLS }, () => null)
+          ).map((row, rowIndex) =>
+            row.map((_, cellIndex) => (
+              <BackgroundElement
+                key={`${rowIndex}_${cellIndex}`}
+                $backgroundColor={(rowIndex + cellIndex) % 2}
+              />
+            ))
+          )}
+        </BackgroundBlock>
+      </Block>
+    </Wrapper>
   )
 }
 
