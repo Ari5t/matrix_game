@@ -26,14 +26,14 @@ const CrystalIcon = styled(SVG)<{ $color: string }>`
 `
 
 const Block = styled.div`
-  position: relative;
+  position: absolute;
   display: grid;
   grid-template-columns: repeat(${COLS}, 1fr);
   grid-template-rows: repeat(${ROWS}, 1fr);
 `
 
 const BackgroundBlock = styled(Block)`
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 1;
@@ -89,29 +89,29 @@ function App() {
 
   return (
     <Wrapper>
-      <Block>
-        {matrix.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => (
-            <CrystalIcon
+      <BackgroundBlock>
+        {Array.from({ length: ROWS }, () =>
+          Array.from({ length: COLS }, () => null)
+        ).map((row, rowIndex) =>
+          row.map((_, cellIndex) => (
+            <BackgroundElement
               key={`${rowIndex}_${cellIndex}`}
-              src={crystalSrc}
-              $color={cell}
+              $backgroundColor={(rowIndex + cellIndex) % 2}
             />
           ))
         )}
-        <BackgroundBlock>
-          {Array.from({ length: ROWS }, () =>
-            Array.from({ length: COLS }, () => null)
-          ).map((row, rowIndex) =>
-            row.map((_, cellIndex) => (
-              <BackgroundElement
+        <Block>
+          {matrix.map((row, rowIndex) =>
+            row.map((cell, cellIndex) => (
+              <CrystalIcon
                 key={`${rowIndex}_${cellIndex}`}
-                $backgroundColor={(rowIndex + cellIndex) % 2}
+                src={crystalSrc}
+                $color={cell}
               />
             ))
           )}
-        </BackgroundBlock>
-      </Block>
+        </Block>
+      </BackgroundBlock>
     </Wrapper>
   )
 }
