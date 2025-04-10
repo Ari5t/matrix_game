@@ -1,5 +1,19 @@
-import { Block, CrystalIcon } from '../common/styled'
+import styled from 'styled-components'
+import SVG from 'react-inlinesvg'
+
+import { Block } from '../common/styled'
+
 import crystalSrc from '../assets/crystal.svg'
+
+export const CrystalIcon = styled(SVG)<{ $color: string }>`
+  width: 64px;
+  height: 64px;
+  z-index: 2;
+
+  & path {
+    fill: ${({ $color }) => $color};
+  }
+`
 
 interface CrystalGridProps {
   matrix: string[][]

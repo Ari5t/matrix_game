@@ -1,11 +1,28 @@
-import CrystalGrid from './СrystalGrid'
+import styled from 'styled-components';
 
-import { BackgroundBlock, BackgroundElement } from '../common/styled'
+import CrystalGrid from './CrystalGrid';
+
+import { Block } from '../common/styled';
+
+export const BackgroundBlock = styled(Block)`
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+`;
+
+export const BackgroundElement = styled.div<{ $backgroundColor?: number }>`
+  width: 64px;
+  height: 64px;
+  background-color: ${({ $backgroundColor }) =>
+    $backgroundColor ? '#383838' : '#333333'};
+`;
 
 interface CrystalGridProps {
-  matrix: string[][]
-  rows: number
-  cols: number
+  matrix: string[][];
+  rows: number;
+  cols: number;
 }
 
 function Crystals({ rows, cols, matrix }: CrystalGridProps) {
@@ -23,7 +40,7 @@ function Crystals({ rows, cols, matrix }: CrystalGridProps) {
       )}
       <CrystalGrid matrix={matrix} />
     </BackgroundBlock>
-  )
+  );
 }
 
-export default Crystals
+export default Crystals;
