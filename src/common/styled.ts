@@ -1,7 +1,5 @@
 import styled from 'styled-components'
-
-const ROWS = Number(import.meta.env.VITE_ROWS)
-const COLS = Number(import.meta.env.VITE_COLS)
+import { useConfigStore } from '../store/config'
 
 export const crystalColors = [
   '#ffb3ba',
@@ -23,6 +21,6 @@ export const Wrapper = styled.div`
 export const Block = styled.div`
   position: absolute;
   display: grid;
-  grid-template-columns: repeat(${COLS}, 1fr);
-  grid-template-rows: repeat(${ROWS}, 1fr);
+  grid-template-columns: repeat(${useConfigStore.getState().config.cols}, 1fr);
+  grid-template-rows: repeat(${useConfigStore.getState().config.rows}, 1fr);
 `
