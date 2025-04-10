@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import CrystalGrid from './CrystalGrid';
 
+import useConfigStore from '../store/config';
 import { Block } from '../common/styled';
 
 export const BackgroundBlock = styled(Block)`
@@ -19,13 +20,9 @@ export const BackgroundElement = styled.div<{ $backgroundColor?: number }>`
     $backgroundColor ? '#383838' : '#333333'};
 `;
 
-interface CrystalGridProps {
-  matrix: string[][];
-  rows: number;
-  cols: number;
-}
+function Crystals() {
+  const { rows, cols } = useConfigStore((state) => state.config);
 
-function Crystals({ rows, cols, matrix }: CrystalGridProps) {
   return (
     <BackgroundBlock>
       {Array.from({ length: rows }, () =>
@@ -38,7 +35,7 @@ function Crystals({ rows, cols, matrix }: CrystalGridProps) {
           />
         ))
       )}
-      <CrystalGrid matrix={matrix} />
+      <CrystalGrid />
     </BackgroundBlock>
   );
 }

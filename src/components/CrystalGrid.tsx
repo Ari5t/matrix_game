@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import SVG from 'react-inlinesvg'
 
+import useMatrixStore from '../store/matrix'
 import { Block } from '../common/styled'
 
 import crystalSrc from '../assets/crystal.svg'
@@ -15,11 +16,9 @@ export const CrystalIcon = styled(SVG)<{ $color: string }>`
   }
 `
 
-interface CrystalGridProps {
-  matrix: string[][]
-}
+function CrystalGrid() {
+    const { matrix } = useMatrixStore();
 
-function CrystalGrid({ matrix }: CrystalGridProps) {
   return (
     <Block>
       {matrix.map((row, rowIndex) =>
