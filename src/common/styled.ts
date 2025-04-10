@@ -10,15 +10,6 @@ export const crystalColors = [
   '#bae1ff',
 ];
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-`;
-
 export const Block = styled.div`
   position: absolute;
   display: grid;

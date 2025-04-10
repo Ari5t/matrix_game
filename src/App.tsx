@@ -1,10 +1,19 @@
 import { useEffect } from 'react';
+import styled from 'styled-components';
 
-import { Wrapper } from './common/styled';
 import Crystals from './components/Crystals';
 
 import useConfigStore from './store/config';
 import useMatrixStore from './store/matrix';
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+`;
 
 function App() {
   const { rows, cols, generationTime } = useConfigStore((state) => state.config);
