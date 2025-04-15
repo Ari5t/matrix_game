@@ -3,25 +3,23 @@ import styled from 'styled-components';
 
 import Crystals from './components/Crystals';
 
-import useConfigStore from './store/config';
-import useMatrixStore from './store/matrix';
+import useMatrixStore, { addCrystal } from './store/useMatrixStore';
 
 function App() {
-  const { rows, cols, generationTime } = useConfigStore((state) => state.config);
-  const { addCrystal, matrix } = useMatrixStore();
+  const { matrix, cols, rows, generationTime } = useMatrixStore();
 
   useEffect(function () {
-      if (matrix.length === rows && matrix[matrix.length - 1].length === cols) return;
+    if (matrix.length === rows && matrix[matrix.length - 1].length === cols) return;
 
-      const timer = setInterval(() => {
-        addCrystal();
-      }, generationTime);
+    const timer = setInterval(() => {
+      addCrystal();
+    }, generationTime);
 
-      return function stopTimer() {
-        clearInterval(timer);
-      };
+    return function stopTimer() {
+      clearInterval(timer);
+    };
     
-  }, [addCrystal, cols, generationTime, matrix, rows]);
+  }, [cols, generationTime, matrix, rows]);
 
   return (
     <Wrapper rows={rows} cols={cols}>

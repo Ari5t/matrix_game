@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SVG from 'react-inlinesvg';
 
-import useMatrixStore from '../store/matrix';
+import useMatrixStore from '../store/useMatrixStore';
 
 import crystalSrc from '../assets/crystal.svg';
 
