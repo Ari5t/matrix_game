@@ -5,20 +5,19 @@ import useMatrixStore from '../store/useMatrixStore';
 
 import crystalSrc from '../assets/crystal.svg';
 
-function CrystalGrid() {
+interface CrystalGridProps {
+  row: number;
+  col: number;
+}
+
+function CrystalGrid({ row, col }: CrystalGridProps) {
   const { matrix } = useMatrixStore();
+
+  if (!(matrix[row] && matrix[row][col])) return;
 
   return (
     <div className='wrapper'>
-      {matrix.map((row, rowIndex) =>
-        row.map((cell, cellIndex) => (
-          <CrystalIcon
-            key={`${rowIndex}_${cellIndex}`}
-            src={crystalSrc}
-            $color={cell}
-          />
-        ))
-      )}
+      <CrystalIcon src={crystalSrc} $color={matrix[row][col]} />
     </div>
   );
 }

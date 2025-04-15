@@ -16,11 +16,11 @@ function Crystals({ rows, cols }: CrystalsProps) {
           row.map((_: null, cellIndex: number) => (
             <BackgroundBlock
               key={`${rowIndex}_${cellIndex}`}
-              backgroundColor={(rowIndex + cellIndex) % 2}
-            />
+              backgroundColor={(rowIndex + cellIndex) % 2}>
+              <CrystalGrid row={rowIndex} col={cellIndex} />
+            </BackgroundBlock>
           ))
         )}
-      <CrystalGrid />
     </Wrapper>
   );
 }
