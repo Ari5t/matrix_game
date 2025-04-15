@@ -1,9 +1,8 @@
 import { create } from 'zustand';
 
 import useConfigStore from './config';
-import { crystalColors } from '../common/styled';
 
-import { randomFromInterval } from '../utils/random';
+import { getRandomColor } from '../utils/random';
 
 interface MatrixStore {
   matrix: string[][];
@@ -17,7 +16,7 @@ const useMatrixStore = create<MatrixStore>((set) => ({
       const newMatrix = [...state.matrix];
       const lastRowId = newMatrix.length - 1;
       const lastRow = newMatrix[lastRowId];
-      const newCrystal = crystalColors[randomFromInterval(0, crystalColors.length - 1)];
+      const newCrystal = getRandomColor();
       if (lastRow.length === useConfigStore.getState().config.cols) {
         newMatrix[newMatrix.length] = [newCrystal];
         return { matrix: newMatrix };

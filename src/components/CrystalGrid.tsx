@@ -1,26 +1,15 @@
-import styled from 'styled-components'
-import SVG from 'react-inlinesvg'
+import styled from 'styled-components';
+import SVG from 'react-inlinesvg';
 
-import useMatrixStore from '../store/matrix'
-import { Block } from '../common/styled'
+import useMatrixStore from '../store/matrix';
 
-import crystalSrc from '../assets/crystal.svg'
-
-export const CrystalIcon = styled(SVG)<{ $color: string }>`
-  width: 64px;
-  height: 64px;
-  z-index: 2;
-
-  & path {
-    fill: ${({ $color }) => $color};
-  }
-`
+import crystalSrc from '../assets/crystal.svg';
 
 function CrystalGrid() {
-    const { matrix } = useMatrixStore();
+  const { matrix } = useMatrixStore();
 
   return (
-    <Block>
+    <div className='wrapper'>
       {matrix.map((row, rowIndex) =>
         row.map((cell, cellIndex) => (
           <CrystalIcon
@@ -30,8 +19,18 @@ function CrystalGrid() {
           />
         ))
       )}
-    </Block>
-  )
+    </div>
+  );
 }
 
-export default CrystalGrid
+export default CrystalGrid;
+
+export const CrystalIcon = styled(SVG)<{ $color: string }>`
+  width: 64px;
+  height: 64px;
+  z-index: 2;
+
+  & path {
+    fill: ${({ $color }) => $color};
+  }
+`;
