@@ -16,7 +16,7 @@ function Crystals({ rows, cols }: CrystalsProps) {
           row.map((_: null, cellIndex: number) => (
             <BackgroundBlock
               key={`${rowIndex}_${cellIndex}`}
-              $backgroundColor={(rowIndex + cellIndex) % 2}
+              backgroundColor={(rowIndex + cellIndex) % 2}
             />
           ))
         )}
@@ -46,9 +46,9 @@ const Wrapper = styled.div<{ rows: number; cols: number }>`
   }
 `;
 
-const BackgroundBlock = styled.div<{ $backgroundColor?: number }>`
+const BackgroundBlock = styled.div<{ backgroundColor: number }>`
   width: 64px;
   height: 64px;
-  background-color: ${({ $backgroundColor }) =>
-    $backgroundColor ? '#383838' : '#333333'};
+  background-color: ${({ backgroundColor, theme }) =>
+    backgroundColor ? theme.colors.square : theme.colors.squareAlt};
 `;

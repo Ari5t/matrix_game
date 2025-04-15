@@ -1,9 +1,18 @@
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Crystals from './components/Crystals';
 
 import useMatrixStore, { addCrystal } from './store/useMatrixStore';
+
+const theme = {
+  squareSize: 64,
+  colors: {
+    square: '#333333',
+    squareAlt: '#383838',
+    
+  }
+}
 
 function App() {
   const { matrix, cols, rows, generationTime } = useMatrixStore();
@@ -22,9 +31,11 @@ function App() {
   }, [cols, generationTime, matrix, rows]);
 
   return (
-    <Wrapper rows={rows} cols={cols}>
-      <Crystals rows={rows} cols={cols} />
-    </Wrapper>
+    <ThemeProvider theme={theme}>
+      <Wrapper rows={rows} cols={cols}>
+        <Crystals rows={rows} cols={cols} />
+      </Wrapper>
+    </ThemeProvider>
   );
 }
 
