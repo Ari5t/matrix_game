@@ -10,7 +10,6 @@ const theme = {
   colors: {
     square: '#333333',
     squareAlt: '#383838',
-    
   }
 }
 
@@ -48,6 +47,6 @@ export const Wrapper = styled.div<{ rows: number; cols: number }>`
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  min-width: ${({ cols }) => cols * 64}px;
-  min-height: ${({ rows }) => rows * 64}px;
+  min-width: ${({ cols, theme }) => cols * theme.squareSize}px;
+  min-height: ${({ rows, theme }) => rows * theme.squareSize}px;
 `;

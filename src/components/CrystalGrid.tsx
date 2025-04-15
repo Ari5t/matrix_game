@@ -25,8 +25,8 @@ function CrystalGrid({ row, col }: CrystalGridProps) {
 export default CrystalGrid;
 
 export const CrystalIcon = styled(SVG)<{ $color: string }>`
-  width: 64px;
-  height: 64px;
+  width: ${({ theme }) => `${theme.squareSize}px`};
+  height: ${({ theme }) => `${theme.squareSize}px`};
   z-index: 2;
 
   & path {

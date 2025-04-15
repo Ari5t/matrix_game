@@ -47,8 +47,8 @@ const Wrapper = styled.div<{ rows: number; cols: number }>`
 `;
 
 const BackgroundBlock = styled.div<{ backgroundColor: number }>`
-  width: 64px;
-  height: 64px;
+  width: ${({ theme }) => `${theme.squareSize}px`};
+  height: ${({ theme }) => `${theme.squareSize}px`};
   background-color: ${({ backgroundColor, theme }) =>
     backgroundColor ? theme.colors.square : theme.colors.squareAlt};
 `;
