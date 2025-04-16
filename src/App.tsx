@@ -17,7 +17,7 @@ function App() {
   const { matrix, cols, rows, generationTime } = useMatrixStore();
 
   useEffect(function () {
-    if (matrix.length === rows && matrix[matrix.length - 1].length === cols) return;
+    if (matrix[matrix.length - 1].color !== undefined) return;
 
     const timer = setInterval(() => {
       addCrystal();
@@ -32,7 +32,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Wrapper rows={rows} cols={cols}>
-        <Crystals rows={rows} cols={cols} />
+        <Crystals />
       </Wrapper>
     </ThemeProvider>
   );

@@ -1,26 +1,20 @@
 import styled from 'styled-components';
 
 import CrystalGrid from './CrystalGrid';
+import useMatrixStore from '../store/useMatrixStore';
 
-interface CrystalsProps {
-  rows: number;
-  cols: number;
-}
-
-function Crystals({ rows, cols }: CrystalsProps) {
+function Crystals() {
+  const { matrix, rows, cols } = useMatrixStore();
   return (
     <Wrapper rows={rows} cols={cols}>
-      {Array(rows)
-        .fill(Array(cols).fill(null))
-        .map((row, rowIndex) =>
-          row.map((_: null, cellIndex: number) => (
-            <BackgroundBlock
-              key={`${rowIndex}_${cellIndex}`}
-              backgroundColor={(rowIndex + cellIndex) % 2}>
-              <CrystalGrid row={rowIndex} col={cellIndex} />
-            </BackgroundBlock>
-          ))
-        )}
+      {matrix.map((item, itemIndex) => (
+        <BackgroundBlock
+          key={`${itemIndex}_item`}
+          $backgroundId={item.backgroundId}
+        >
+          {item.color && <CrystalGrid color={item.color} />}
+        </BackgroundBlock>
+      ))}
     </Wrapper>
   );
 }
@@ -46,9 +40,9 @@ const Wrapper = styled.div<{ rows: number; cols: number }>`
   }
 `;
 
-const BackgroundBlock = styled.div<{ backgroundColor: number }>`
+const BackgroundBlock = styled.div<{ $backgroundId: number }>`
   width: ${({ theme }) => `${theme.squareSize}px`};
   height: ${({ theme }) => `${theme.squareSize}px`};
-  background-color: ${({ backgroundColor, theme }) =>
-    backgroundColor ? theme.colors.square : theme.colors.squareAlt};
+  background-color: ${({ $backgroundId, theme }) =>
+    $backgroundId ? theme.colors.square : theme.colors.squareAlt};
 `;

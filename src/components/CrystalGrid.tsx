@@ -1,23 +1,16 @@
 import styled from 'styled-components';
 import SVG from 'react-inlinesvg';
 
-import useMatrixStore from '../store/useMatrixStore';
-
 import crystalSrc from '../assets/crystal.svg';
 
 interface CrystalGridProps {
-  row: number;
-  col: number;
+  color: string;
 }
 
-function CrystalGrid({ row, col }: CrystalGridProps) {
-  const { matrix } = useMatrixStore();
-
-  if (!(matrix[row] && matrix[row][col])) return;
-
+function CrystalGrid({ color }: CrystalGridProps) {
   return (
     <div className='wrapper'>
-      <CrystalIcon src={crystalSrc} $color={matrix[row][col]} />
+      <CrystalIcon src={crystalSrc} $color={color} />
     </div>
   );
 }
