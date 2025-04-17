@@ -1,7 +1,7 @@
 export const crystalColors = [
-  '#ffb3ba',
-  '#ffdfba',
-  '#ffffba',
-  '#baffc9',
-  '#bae1ff',
+  '#00bbf9',
+  '#fee440',
+  '#00f5d4',
+  '#f15bb5',
+  '#9b5de5',
 ];
