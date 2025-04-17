@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import Crystals from './components/Crystals';
 
-import useMatrixStore, { addCrystal } from './store/useMatrixStore';
+import useMatrixStore, { addCrystal, removeCrystal } from './store/useMatrixStore';
 
 const theme = {
   squareSize: 64,
@@ -21,6 +21,7 @@ function App() {
 
     const timer = setInterval(() => {
       addCrystal();
+      removeCrystal();
     }, generationTime);
 
     return function stopTimer() {
@@ -47,6 +48,7 @@ export const Wrapper = styled.div<{ rows: number; cols: number }>`
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
   min-width: ${({ cols, theme }) => cols * theme.squareSize}px;
   min-height: ${({ rows, theme }) => rows * theme.squareSize}px;
 `;
