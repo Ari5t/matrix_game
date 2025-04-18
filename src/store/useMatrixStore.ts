@@ -55,6 +55,7 @@ export const removeCrystal = () => {
     const newMatrix = [...state.matrix];
     const lastItemId = newMatrix.findIndex((item) => !item.color) - 1;
     const lastItem = newMatrix[lastItemId];
+    const removeIds = new Set<number>();
 
     if (!lastItem) return state;
 
@@ -64,7 +65,7 @@ export const removeCrystal = () => {
       newMatrix[lastItemId - 2]?.color === lastItem.color
     ) {
       for (let i = 0; i < 3; i++) {
-        newMatrix[lastItemId - i].color = undefined;
+        removeIds.add(lastItemId - i);
       }
     }
 
@@ -74,8 +75,12 @@ export const removeCrystal = () => {
       newMatrix[lastItemId - state.cols * 2]?.color === lastItem.color
     ) {
       for (let i = 0; i < 3; i++) {
-        newMatrix[lastItemId - state.cols * i].color = undefined;
+        removeIds.add(lastItemId - state.cols * i);
       }
+    }
+
+    for (const id of removeIds) {
+      newMatrix[id].color = undefined;
     }
 
     return { matrix: newMatrix };
