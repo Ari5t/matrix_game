@@ -83,6 +83,20 @@ export const removeCrystal = () => {
       newMatrix[id].color = undefined;
     }
 
+    for (let index = 0; index <= lastItemId; index++) {
+      if (lastItemId === index) break;
+      if (newMatrix[index].color) continue;
+
+      for (let indexNear = index + 1; indexNear <= lastItemId; indexNear++) {
+        if (newMatrix[indexNear].color === undefined) continue
+
+
+        newMatrix[index].color = newMatrix[indexNear].color;
+        newMatrix[indexNear].color = undefined;
+        break
+      }
+    }
+
     return { matrix: newMatrix };
   });
 };
