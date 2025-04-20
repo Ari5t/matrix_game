@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
-import { getRandomColor } from '../utils/random';
+import matrixServices from '../services/matrixServices';
 
 const GRID_SIZE_DEFAULT = 9;
 
-interface Item {
+export interface Item {
   color?: string;
   backgroundId: number;
 }
@@ -36,68 +36,13 @@ const useMatrixStore = create<MatrixStore>(() => matrixStoreDefault);
 
 export const addCrystal = () => {
   useMatrixStore.setState((state) => {
-    const newMatrix = [...state.matrix];
-    const lastItemId = newMatrix.findIndex((item) => !item.color);
-
-    if (lastItemId === undefined) return state;
-
-    newMatrix[lastItemId] = {
-      ...newMatrix[lastItemId],
-      color: getRandomColor(),
-    };
-
-    return { matrix: newMatrix };
+    return { matrix: matrixServices.add(state.matrix) };
   });
 };
 
-export const removeCrystal = () => {
+export const removeCrystal = async () => {
   useMatrixStore.setState((state) => {
-    const newMatrix = [...state.matrix];
-    const lastItemId = newMatrix.findIndex((item) => !item.color) - 1;
-    const lastItem = newMatrix[lastItemId];
-    const removeIds = new Set<number>();
-
-    if (!lastItem) return state;
-
-    if (
-      lastItemId % state.cols >= 2 &&
-      newMatrix[lastItemId - 1]?.color === lastItem.color &&
-      newMatrix[lastItemId - 2]?.color === lastItem.color
-    ) {
-      for (let i = 0; i < 3; i++) {
-        removeIds.add(lastItemId - i);
-      }
-    }
-
-    if (
-      Math.floor(lastItemId / state.cols) >= 2 &&
-      newMatrix[lastItemId - state.cols * 1]?.color === lastItem.color &&
-      newMatrix[lastItemId - state.cols * 2]?.color === lastItem.color
-    ) {
-      for (let i = 0; i < 3; i++) {
-        removeIds.add(lastItemId - state.cols * i);
-      }
-    }
-
-    for (const id of removeIds) {
-      newMatrix[id].color = undefined;
-    }
-
-    for (let index = 0; index <= lastItemId; index++) {
-      if (lastItemId === index) break;
-      if (newMatrix[index].color) continue;
-
-      for (let indexNear = index + 1; indexNear <= lastItemId; indexNear++) {
-        if (newMatrix[indexNear].color === undefined) continue
-
-
-        newMatrix[index].color = newMatrix[indexNear].color;
-        newMatrix[indexNear].color = undefined;
-        break
-      }
-    }
-
-    return { matrix: newMatrix };
+    return { matrix: matrixServices.remove(state.matrix, state.cols) };
   });
 };
 
