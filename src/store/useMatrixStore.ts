@@ -7,6 +7,7 @@ const GRID_SIZE_DEFAULT = 9;
 export interface Item {
   color?: string;
   backgroundId: number;
+  remove: () => void;
 }
 interface MatrixStore {
   matrix: Item[];
@@ -19,6 +20,12 @@ const itemGenerate = (index: number, cols: number): Item => {
   return {
     color: undefined,
     backgroundId: (Math.floor(index / cols) + (index % cols)) % 2,
+    remove() {
+      this.color = '#000';
+      setTimeout(() => {
+        this.color = undefined;
+      }, 1000);
+    }
   };
 };
 

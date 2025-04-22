@@ -49,7 +49,7 @@ class MatrixServices implements IMatrixServices {
       }
 
       for (const id of removeIds) {
-        newMatrix[id].color = undefined;
+        newMatrix[id].remove();
       }
 
       for (let index = 0; index <= lastItemId; index++) {
