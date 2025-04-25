@@ -33,7 +33,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Select />
+      <Select isMulti/>
       <Wrapper rows={rows} cols={cols}>
         <Crystals />
       </Wrapper>

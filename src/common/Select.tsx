@@ -12,18 +12,31 @@ interface ISelectOption {
   label: string;
 }
 
-function Select() {
-  const [selectedOption, setSelectedOption] = useState<ISelectOption | null>(options[0]);
+interface ISelectProps {
+  isMulti?: boolean;
+}
 
+function Select({ isMulti = false }: ISelectProps) {
+  const [selectedOption, setSelectedOption] = useState<ISelectOption[]>([options[0]]);
   const [focus, setFocus] = useState(false);
 
   const handleOptionClick = (event: MouseEvent) => {
-    setSelectedOption(() => {
-      return (
-        options.find(
-          (option) => option.value === (event.target as HTMLElement).id
-        ) ?? null
-      );
+    setSelectedOption((pre) => {
+      const option = options.find((option) => option.value === (event.target as HTMLElement).id);
+
+      if (!option) return pre;
+
+      if (!isMulti) {
+        return [option];
+      }
+
+      const isSelected = pre.some((selected) => selected.value === option.value);
+
+      if (isSelected) {
+        return pre.filter((selected) => selected.value !== option.value);
+      }
+
+      return [...pre, option];
     });
   };
 
@@ -38,14 +51,14 @@ function Select() {
   return (
     <Wrapper tabIndex={0} onBlur={handleBlur} onFocus={handleFocus}>
       <SelectButton $isFocus={focus}>
-        {selectedOption ? selectedOption['label'] : ''}
+        {selectedOption.map((e) => e.label).join(', ')}
       </SelectButton>
       <List $isFocus={focus}>
         {options.map((option) => (
           <Option
             onClick={handleOptionClick}
             id={option.value}
-            $isActive={option.value === selectedOption?.value}
+            $isActive={selectedOption.some((selected) => selected.value === option.value)}
             key={option.value}>
             {option.label}
           </Option>
@@ -81,6 +94,7 @@ const SelectButton = styled.button<{ $isFocus: boolean }>`
   font-size: 16px;
   padding: 8px 16px;
   width: 100%;
+  min-height: 38px;
 
   cursor: pointer;
 
