@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Crystals from './components/Crystals';
 
 import useMatrixStore, { addCrystal, removeCrystal } from './store/useMatrixStore';
+import Select from './common/select';
 
 const theme = {
   squareSize: 64,
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Select />
       <Wrapper rows={rows} cols={cols}>
         <Crystals />
       </Wrapper>
