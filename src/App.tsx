@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Crystals from './components/Crystals';
 
 import useMatrixStore, { addCrystal, removeCrystal } from './store/useMatrixStore';
-import Select from './common/select';
+import Select from './common/Select';
 
 const theme = {
   squareSize: 64,
