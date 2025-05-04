@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Crystals from './components/Crystals';
 
 import useMatrixStore, { addCrystal, removeCrystal } from './store/useMatrixStore';
-import Select from './common/Select';
+import Datepicker from './common/Datepicker';
 
 const theme = {
   squareSize: 64,
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Select isMulti/>
+      <Datepicker  isRange/>
       <Wrapper rows={rows} cols={cols}>
         <Crystals />
       </Wrapper>
